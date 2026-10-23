@@ -17,7 +17,8 @@ private:
 public:
     // Constructors
     Matrix() : nRow(1), nCol(1), matrix(nRow, Vec(nCol, 0.0)) {}
-    Matrix(size_t n, size_t m, double init = 0.0) : nRow(n), nCol(m), matrix(nRow, Vec(nCol, init)) {}
+    Matrix(size_t n, size_t m, double init = 0.0) : nRow(n), nCol(m), 
+        matrix(nRow, Vec(nCol, init)) {}
 
     // getter
     std::pair<size_t, size_t> dimension() const {
@@ -131,7 +132,9 @@ void printMatrix(const Matrix &m) {
     auto [r, c] = m.dimension();
     for(size_t i = 0; i < r; i++) {
         for(size_t j = 0; j < c; j++) {
-            std::cout << std::fixed << std::setprecision(2) << std::setw(8) << m[i][j] << ' ';
+            std::cout << std::fixed
+                      << std::setprecision(2)
+                      << std::setw(8) << m[i][j] << ' ';
         }
         std::cout << '\n';
     }
