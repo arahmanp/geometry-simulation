@@ -19,6 +19,7 @@ public:
     Matrix() : nRow(1), nCol(1), matrix(nRow, Vec(nCol, 0.0)) {}
     Matrix(size_t n, size_t m, double init = 0.0) : nRow(n), nCol(m), 
         matrix(nRow, Vec(nCol, init)) {}
+    Matrix(std::vector<Vec> m) : nRow(m.size()), nCol(m[0].size()), matrix(m) {}
 
     // getter
     std::pair<size_t, size_t> dimension() const {
@@ -75,6 +76,25 @@ public:
 
         return result;
     }
+    Matrix operator*(const Matrix &other) const {
+        auto [n, m] = other.dimension();
+
+        if(nCol != n) {
+            throw std::runtime_error("Dimension is not match!");
+        }
+
+        Matrix result(nRow, m);
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < m; j++) {
+                for(size_t k = 0; k < m; k++) {
+                    result[i][j] += (matrix[i][k] * other[k][j]);
+                }
+            }
+        }
+
+        return result;
+    }
     void operator+=(const Matrix &other) {
         if(this->dimension() != other.dimension()) {
             throw std::runtime_error("Dimension is not match!");
@@ -101,6 +121,31 @@ public:
         for(size_t i = 0; i < nRow; i++) {
             for(size_t j = 0; j < nCol; j++) {
                 matrix[i][j] *= c;
+            }
+        }
+    }
+    void operator*=(const Matrix &other) {
+        auto [n, m] = other.dimension();
+
+        if(nCol != n) {
+            throw std::runtime_error("Dimension is not match!");
+        }
+
+        nCol = m;
+
+        Matrix tmp(nRow, nCol);
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                for(size_t k = 0; k < nCol; k++) {
+                    tmp[i][j] += (matrix[i][k] * other[k][j]);
+                }
+            }
+        }
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                matrix[i][j] = tmp[i][j];
             }
         }
     }
@@ -154,34 +199,25 @@ void printMatrix(const Matrix &m) {
 }
 
 int main() {
-    Matrix A(2, 3), B(2, 3, 5.5);
+    Matrix A = {{
+        {-2.4, 2, 3},
+        {1, 5, 3},
+        {3, 2, 1},
+    }};
 
-    Matrix C = A + B;
+    Matrix B = {{
+        {0.6, 2, 1},
+        {3, 2, 1.32},
+        {-1, 2, 1},
+    }};
+
+    Matrix C = A * B;
+
     printMatrix(C);
 
     std::cout << '\n';
 
-    C *= 2.3;
+    C *= C;
+
     printMatrix(C);
-
-    std::cout << '\n';
-
-    Matrix D(2, 3, -1);
-
-    C[1][1] = 0.21;
-    C += D;
-    printMatrix(C);
-
-    std::cout << '\n';
-
-    C *= (1.0 / 3);
-    printMatrix(C);
-
-    std::cout << '\n';
-
-    C = C.transpose();
-    printMatrix(C);
-
-    std::cout << '\n';
-    std::cout << (C != D) << '\n';
 }
