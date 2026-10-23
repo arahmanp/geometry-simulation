@@ -61,6 +61,17 @@ public:
 
         return result;
     }
+    Matrix operator*(double c) const {
+        Matrix result(nRow, nCol);
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                result[i][j] = matrix[i][j] * c;
+            }
+        }
+
+        return result;
+    }
     void operator+=(const Matrix &other) {
         if(this->dimension() != other.dimension()) {
             throw std::runtime_error("Dimension is not match!");
@@ -80,6 +91,13 @@ public:
         for(size_t i = 0; i < nRow; i++) {
             for(size_t j = 0; j < nCol; j++) {
                 matrix[i][j] = matrix[i][j] - other[i][j];
+            }
+        }
+    }
+    void operator*=(double c) {
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                matrix[i][j] *= c;
             }
         }
     }
