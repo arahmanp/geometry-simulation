@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <iostream>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 
@@ -27,6 +28,82 @@ public:
     // Setter
     Vec& operator[](size_t index) {
         return matrix[index];
+    }
+
+    // Operators
+    Matrix operator+(const Matrix &other) const {
+        if(this->dimension() != other.dimension()) {
+            throw std::runtime_error("Dimension is not match!");
+        }
+
+        Matrix result(nRow, nCol);
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                result[i][j] = matrix[i][j] + other[i][j];
+            }
+        }
+
+        return result;
+    }
+    Matrix operator-(const Matrix &other) const {
+        if(this->dimension() != other.dimension()) {
+            throw std::runtime_error("Dimension is not match!");
+        }
+
+        Matrix result(nRow, nCol);
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                result[i][j] = matrix[i][j] - other[i][j];
+            }
+        }
+
+        return result;
+    }
+    void operator+=(const Matrix &other) {
+        if(this->dimension() != other.dimension()) {
+            throw std::runtime_error("Dimension is not match!");
+        }
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                matrix[i][j] = matrix[i][j] + other[i][j];
+            }
+        }
+    }
+    void operator-=(const Matrix &other) {
+        if(this->dimension() != other.dimension()) {
+            throw std::runtime_error("Dimension is not match!");
+        }
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                matrix[i][j] = matrix[i][j] - other[i][j];
+            }
+        }
+    }
+    bool operator==(const Matrix &other) {
+        if(this->dimension() != other.dimension()) return false;
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                if(matrix[i][j] != other[i][j]) return false;
+            }
+        }
+
+        return true;
+    }
+    bool operator!=(const Matrix &other) {
+        if(this->dimension() != other.dimension()) return true;
+
+        for(size_t i = 0; i < nRow; i++) {
+            for(size_t j = 0; j < nCol; j++) {
+                if(matrix[i][j] != other[i][j]) return true;
+            }
+        }
+
+        return false;
     }
 };
 
