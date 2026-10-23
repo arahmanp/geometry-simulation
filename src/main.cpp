@@ -79,7 +79,7 @@ public:
 
         for(size_t i = 0; i < nRow; i++) {
             for(size_t j = 0; j < nCol; j++) {
-                matrix[i][j] = matrix[i][j] + other[i][j];
+                matrix[i][j] += other[i][j];
             }
         }
     }
@@ -90,7 +90,7 @@ public:
 
         for(size_t i = 0; i < nRow; i++) {
             for(size_t j = 0; j < nCol; j++) {
-                matrix[i][j] = matrix[i][j] - other[i][j];
+                matrix[i][j] -= other[i][j];
             }
         }
     }
