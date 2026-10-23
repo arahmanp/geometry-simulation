@@ -1,4 +1,6 @@
 #include <cstddef>
+#include <iomanip>
+#include <ios>
 #include <iostream>
 #include <stdexcept>
 #include <utility>
@@ -133,4 +135,32 @@ void printMatrix(const Matrix &m) {
         }
         std::cout << '\n';
     }
+}
+
+int main() {
+    Matrix A(2, 3), B(2, 3, 5.5);
+
+    Matrix C = A + B;
+    printMatrix(C);
+
+    std::cout << '\n';
+
+    C *= 2.3;
+    printMatrix(C);
+
+    std::cout << '\n';
+
+    Matrix D(2, 3, -1);
+
+    C[1][1] = 0.21;
+    C += D;
+    printMatrix(C);
+
+    std::cout << '\n';
+
+    C *= (1.0 / 3);
+    printMatrix(C);
+
+    std::cout << '\n';
+    std::cout << (C != D) << '\n';
 }
