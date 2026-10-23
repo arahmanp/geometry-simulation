@@ -125,16 +125,11 @@ public:
     }
 };
 
-int main() {
-    Matrix A(2, 3, -1.3);
-
-    auto [n, m] = A.dimension();
-
-    A[1][1] = 5.5;
-
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
-            std::cout << A[i][j] << ' ';
+void printMatrix(const Matrix &m) {
+    auto [r, c] = m.dimension();
+    for(size_t i = 0; i < r; i++) {
+        for(size_t j = 0; j < c; j++) {
+            std::cout << std::fixed << std::setprecision(2) << std::setw(8) << m[i][j] << ' ';
         }
         std::cout << '\n';
     }
