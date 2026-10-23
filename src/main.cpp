@@ -126,6 +126,19 @@ public:
 
         return false;
     }
+
+    // Matrix manipulation
+    Matrix transpose() {
+        Matrix result(nCol, nRow);
+
+        for(size_t i = 0; i < nCol; i++) {
+            for(size_t j = 0; j < nRow; j++) {
+                result[i][j] = matrix[j][i];
+            }
+        }
+
+        return result;
+    }
 };
 
 void printMatrix(const Matrix &m) {
@@ -162,6 +175,11 @@ int main() {
     std::cout << '\n';
 
     C *= (1.0 / 3);
+    printMatrix(C);
+
+    std::cout << '\n';
+
+    C = C.transpose();
     printMatrix(C);
 
     std::cout << '\n';
